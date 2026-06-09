@@ -1,10 +1,10 @@
 # EEG Data Loader by Muhaimin Sarker
 import os
-import mne
 import numpy as np
 from collections import defaultdict
 
-mne.set_config('MNE_DATA', os.path.expanduser('~/mne_data'))
+os.environ.setdefault('MNE_DATA', os.path.expanduser('~/mne_data'))
+import mne
 
 def load_subject_data(subject=1, run=1):
     """Load and preprocess EEG data with robust event handling."""
