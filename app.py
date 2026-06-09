@@ -125,9 +125,13 @@ def create_comparison_plot(epochs1, epochs2, label1, label2):
 
 
 
+@st.cache_data(show_spinner="Loading EEG data...")
+def load_data(subject, run):
+    return loader.load_subject_data(subject, run)
+
 # Load data
 try:
-    epochs, event_id, error = loader.load_subject_data(subject, run)
+    epochs, event_id, error = load_data(subject, run)
     
     if error:
         st.error(error)
@@ -189,7 +193,7 @@ try:
             
             # Comparison view
             if compare_mode:
-                epochs_compare, _, _ = loader.load_subject_data(subject, compare_run)
+                epochs_compare, _, _ = load_data(subject, compare_run)
                 if epochs_compare:
                     st.markdown("### Comparison View")
                     fig_compare = create_comparison_plot(

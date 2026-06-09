@@ -1,17 +1,18 @@
 # EEG Data Loader by Muhaimin Sarker
+import os
 import mne
 import numpy as np
 from collections import defaultdict
 
+mne.set_config('MNE_DATA', os.path.expanduser('~/mne_data'))
+
 def load_subject_data(subject=1, run=1):
     """Load and preprocess EEG data with robust event handling."""
-    filepath = f"data/S{subject:03d}/S{subject:03d}R{run:02d}.edf"
-    
-    # Added some error handling
     try:
-        raw = mne.io.read_raw_edf(filepath, preload=True, verbose=False)
-    except FileNotFoundError:
-        return None, None, f"File not found: S{subject:03d}R{run:02d}.edf"
+        fnames = mne.datasets.eegbci.load_data(subject, runs=[run], verbose=False)
+        raw = mne.io.read_raw_edf(fnames[0], preload=True, verbose=False)
+    except Exception as e:
+        return None, None, f"Could not load Subject {subject}, Run {run}: {e}"
     
     # Channel renaming (simplified from original names obtained from the raw edf when debugging)
     channel_mapping = {
