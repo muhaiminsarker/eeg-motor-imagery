@@ -9,7 +9,7 @@ import mne
 def load_subject_data(subject=1, run=1):
     """Load and preprocess EEG data with robust event handling."""
     try:
-        fnames = mne.datasets.eegbci.load_data(subject, runs=[run], verbose=False)
+        fnames = mne.datasets.eegbci.load_data(subject, runs=[run], update_path=True, verbose=False)
         raw = mne.io.read_raw_edf(fnames[0], preload=True, verbose=False)
     except Exception as e:
         return None, None, f"Could not load Subject {subject}, Run {run}: {e}"
