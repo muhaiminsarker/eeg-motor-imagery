@@ -66,7 +66,8 @@ with st.sidebar:
     
     # Essentially, this gets the subject ID which defaults to 1 and the increaser goes by 1 
     # Number input can be edited though
-    subject = st.number_input("Subject ID", 1, 109, 1)
+    st.markdown("**Subject ID** (109 subjects total)")
+    subject = st.slider("", 1, 109, 1, help="PhysioNet dataset includes 109 subjects. Subjects 1–3 load instantly; others download on first select (~10s).")
 
     run = st.selectbox(
         "Experimental Run", 
