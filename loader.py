@@ -1,25 +1,26 @@
 # EEG Data Loader by Muhaimin Sarker
 import os
-import urllib.request
-import mne
+import json
 import numpy as np
 from collections import defaultdict
 
-_CACHE_DIR = os.path.expanduser('~/mne_data/eegbci')
+# Pre-write MNE config so it never prompts for the data path
+_mne_config_dir = os.path.expanduser('~/.mne')
+_mne_config_path = os.path.join(_mne_config_dir, 'mne-python.json')
+os.makedirs(_mne_config_dir, exist_ok=True)
+if not os.path.exists(_mne_config_path):
+    with open(_mne_config_path, 'w') as _f:
+        json.dump({'MNE_DATA': os.path.expanduser('~/mne_data')}, _f)
 
-def _get_edf(subject, run):
-    os.makedirs(_CACHE_DIR, exist_ok=True)
-    path = os.path.join(_CACHE_DIR, f"S{subject:03d}R{run:02d}.edf")
-    if not os.path.exists(path):
-        url = f"https://physionet.org/files/eegmmidb/1.0.0/S{subject:03d}/S{subject:03d}R{run:02d}.edf"
-        urllib.request.urlretrieve(url, path)
-    return path
+import mne
 
 def load_subject_data(subject=1, run=1):
     """Load and preprocess EEG data with robust event handling."""
     try:
-        filepath = _get_edf(subject, run)
+        filepath = f"data/S{subject:03d}/S{subject:03d}R{run:02d}.edf"
         raw = mne.io.read_raw_edf(filepath, preload=True, verbose=False)
+    except FileNotFoundError:
+        return None, None, f"File not found: S{subject:03d}R{run:02d}.edf"
     except Exception as e:
         return None, None, f"Could not load Subject {subject}, Run {run}: {e}"
     

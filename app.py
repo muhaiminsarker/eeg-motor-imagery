@@ -66,7 +66,8 @@ with st.sidebar:
     
     # Essentially, this gets the subject ID which defaults to 1 and the increaser goes by 1 
     # Number input can be edited though
-    subject = st.number_input("Subject ID", 1, 109, 1)
+    subject = st.number_input("Subject ID", 1, 3, 1)
+    st.caption("Demo includes 3 of 109 subjects")
 
     run = st.selectbox(
         "Experimental Run", 
