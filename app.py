@@ -66,8 +66,36 @@ with st.sidebar:
     
     # Essentially, this gets the subject ID which defaults to 1 and the increaser goes by 1 
     # Number input can be edited though
-    st.markdown("**Subject ID** (109 subjects total)")
-    subject = st.slider("", 1, 109, 1, help="PhysioNet dataset includes 109 subjects. Subjects 1–3 load instantly; others download on first select (~10s).")
+    st.markdown("**Subject ID**")
+    subject = st.number_input("", 1, 109, 1, label_visibility="collapsed")
+    pct = (subject - 1) / 108 * 100
+    st.markdown(f"""
+<style>
+.subj-meta {{
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #888;
+    margin-top: -10px;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+}}
+.subj-meta span {{ color: #ddd; font-weight: bold; }}
+.subj-track {{
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 1px;
+    margin-bottom: 14px;
+}}
+.subj-fill {{
+    height: 100%;
+    width: {pct:.1f}%;
+    background: linear-gradient(90deg, #4fc3f7, #00e5ff);
+    border-radius: 1px;
+}}
+</style>
+<div class="subj-meta"><span>{subject}</span> / 109 subjects</div>
+<div class="subj-track"><div class="subj-fill"></div></div>
+""", unsafe_allow_html=True)
 
     run = st.selectbox(
         "Experimental Run", 
