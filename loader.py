@@ -1,7 +1,10 @@
 # EEG Data Loader by Muhaimin Sarker
+import os
 import mne
 import numpy as np
 from collections import defaultdict
+
+os.makedirs(os.path.expanduser('~/mne_data'), exist_ok=True)
 
 def load_subject_data(subject=1, run=1):
     """Load and preprocess EEG data with robust event handling."""
