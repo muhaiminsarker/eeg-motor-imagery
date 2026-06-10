@@ -9,8 +9,14 @@ os.makedirs(os.path.expanduser('~/mne_data'), exist_ok=True)
 def load_subject_data(subject=1, run=1):
     """Load and preprocess EEG data with robust event handling."""
     try:
-        fnames = mne.datasets.eegbci.load_data(subject, runs=[run], update_path=True, verbose=False)
-        raw = mne.io.read_raw_edf(fnames[0], preload=True, verbose=False)
+        local_path = f"data/S{subject:03d}/S{subject:03d}R{run:02d}.edf"
+        if os.path.exists(local_path):
+            filepath = local_path
+        else:
+            os.makedirs(os.path.expanduser('~/mne_data'), exist_ok=True)
+            fnames = mne.datasets.eegbci.load_data(subject, runs=[run], update_path=True, verbose=False)
+            filepath = fnames[0]
+        raw = mne.io.read_raw_edf(filepath, preload=True, verbose=False)
     except Exception as e:
         return None, None, f"Could not load Subject {subject}, Run {run}: {e}"
     
