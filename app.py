@@ -125,7 +125,7 @@ def create_comparison_plot(epochs1, epochs2, label1, label2):
 
 
 
-@st.cache_data(show_spinner="Loading EEG data...")
+@st.cache_resource(show_spinner="Loading EEG data...")
 def load_data(subject, run):
     return loader.load_subject_data(subject, run)
 
