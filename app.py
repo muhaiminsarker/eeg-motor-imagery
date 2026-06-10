@@ -72,12 +72,10 @@ with st.sidebar:
     st.markdown(f"""
 <style>
 .subj-meta {{
-    font-family: 'Courier New', monospace;
     font-size: 11px;
     color: #888;
     margin-top: -10px;
     margin-bottom: 6px;
-    letter-spacing: 0.04em;
 }}
 .subj-meta span {{ color: #ddd; font-weight: bold; }}
 .subj-track {{
