@@ -66,34 +66,7 @@ with st.sidebar:
     
     # Essentially, this gets the subject ID which defaults to 1 and the increaser goes by 1 
     # Number input can be edited though
-    st.markdown("**Subject ID**")
-    subject = st.number_input("", 1, 109, 1, label_visibility="collapsed")
-    pct = (subject - 1) / 108 * 100
-    st.markdown(f"""
-<style>
-.subj-meta {{
-    font-size: 11px;
-    color: #888;
-    margin-top: -10px;
-    margin-bottom: 6px;
-}}
-.subj-meta span {{ color: #ddd; font-weight: bold; }}
-.subj-track {{
-    height: 2px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 1px;
-    margin-bottom: 14px;
-}}
-.subj-fill {{
-    height: 100%;
-    width: {pct:.1f}%;
-    background: linear-gradient(90deg, #4fc3f7, #00e5ff);
-    border-radius: 1px;
-}}
-</style>
-<div class="subj-meta"><span>{subject}</span> / 109 subjects</div>
-<div class="subj-track"><div class="subj-fill"></div></div>
-""", unsafe_allow_html=True)
+    subject = st.number_input("Subject ID (1–109)", 1, 109, 1)
 
     run = st.selectbox(
         "Experimental Run", 
